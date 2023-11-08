@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "157293246658",
+    "project_id": "gonews-facc7",
+    "storage_bucket": "gonews-facc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157293246658:android:e2363e687d64861326a35b",
+        "android_client_info": {
+          "package_name": "com.mobile.gonews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157293246658-m7e3r2p0lcnucc4ccbll82pf77hf37vp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mobile.gonews",
+            "certificate_hash": "4b701c9c92a5d9e98ab9fd102daa437a689be49a"
+          }
+        },
+        {
+          "client_id": "157293246658-j8sgpcc8k7ljm7te1vj4ovv39sbh1rcn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBA_BC_Mdsie08W-tmbfaRxe3OsFTuceg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157293246658-j8sgpcc8k7ljm7te1vj4ovv39sbh1rcn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "157293246658-60rpfdcqj1kdm8ddme6phhba2jqh9gkv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mobile.gonews.gonews"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
