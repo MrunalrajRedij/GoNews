@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:getwidget/components/shimmer/gf_shimmer.dart';
 import 'package:gonews/utils/apiUtils.dart';
 import 'package:gonews/widgets/menuDrawer.dart';
 import 'package:gonews/widgets/newsListWidget.dart';
@@ -24,11 +25,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     getNews(nextPage);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void getNews(int page) async {
@@ -113,7 +109,27 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Center(
           child: Container(
             child: newsLists.isEmpty
-                ? const CircularProgressIndicator()
+                ? ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 10,
+                        ),
+                        child: GFShimmer(
+                          child: Container(
+                            height: 200,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
                 : ListView.builder(
                     itemCount: newsLists.length,
                     itemBuilder: (context, index) {

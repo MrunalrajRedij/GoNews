@@ -57,23 +57,39 @@ class _FullNewsScreenState extends State<FullNewsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 widget.imageUrl != null
-                    ? SizedBox(
-                        child: Image.network(
-                          widget.imageUrl,
-                          fit: BoxFit.contain,
+                    ? Hero(
+                        tag: 'animation',
+                        child: SizedBox(
+                          child: Image.network(
+                            widget.imageUrl,
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       )
                     : Container(),
-                const SizedBox(height: 10),
-                Text(widget.title),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
+                Text(
+                  widget.title,
+                  style: decoration.tileHeading16TS,
+                ),
+                const SizedBox(height: 20),
                 Text(widget.desc),
-                const SizedBox(height: 10),
-                Text(widget.sourceId),
-                const SizedBox(height: 10),
-                Text(widget.pubDate),
-                const SizedBox(height: 10),
                 Text(widget.content),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.sourceId,
+                      style: decoration.tileHeading12TS,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      widget.pubDate,
+                      style: decoration.tileHeading12TS,
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

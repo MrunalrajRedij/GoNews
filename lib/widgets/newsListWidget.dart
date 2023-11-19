@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gonews/screens/fullNewsScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
 
 class NewsListWidget extends StatelessWidget {
@@ -37,10 +36,13 @@ class NewsListWidget extends StatelessWidget {
         child: Column(
           children: [
             imageUrl != null
-                ? SizedBox(
-                    child: Image.network(
-                      imageUrl,
-                      fit: BoxFit.contain,
+                ? Hero(
+                    tag: 'animation',
+                    child: SizedBox(
+                      child: Image.network(
+                        imageUrl,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   )
                 : Container(),
