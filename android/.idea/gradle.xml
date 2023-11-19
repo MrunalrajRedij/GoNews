@@ -10,7 +10,13 @@
         <option name="gradleJvm" value="jbr-17" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.15.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth-4.13.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_core-2.22.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_inappwebview-5.8.0/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-5.4.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/path_provider_android-2.2.1/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/share_plus-6.3.4/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_android-6.2.0/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
           </set>

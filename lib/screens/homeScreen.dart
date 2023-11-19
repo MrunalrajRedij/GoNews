@@ -5,7 +5,6 @@ import 'package:gonews/utils/apiUtils.dart';
 import 'package:gonews/widgets/menuDrawer.dart';
 import 'package:gonews/widgets/newsListWidget.dart';
 import 'package:gonews/utils/config/palette.dart' as palette;
-import 'package:gonews/utils/config/decoration.dart' as decoration;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -19,7 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   List<NewsListWidget> newsLists = [];
   TextEditingController searchController = TextEditingController();
-  String nextPage = "";
+  int nextPage = 1;
 
   @override
   void initState() {
@@ -32,24 +31,22 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  void getNews(String page) async {
-    dynamic newsData = await ApiUtils().getHomeScreenNews(page);
+  void getNews(int page) async {
+    dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
+    newsLists.clear();
     for (int i = 0; i < newsData.length; i++) {
       newsLists.add(
         NewsListWidget(
-          title: newsData['results'][i]['title'],
-          link: newsData['results'][i]['link'],
-          creator: newsData['results'][i]['creator'],
-          videoUrl: newsData['results'][i]['video_url'],
-          desc: newsData['results'][i]['description'],
-          content: newsData['results'][i]['content'],
-          pubDate: newsData['results'][i]['pubDate'],
-          imageUrl: newsData['results'][i]['image_url'],
-          sourceId: newsData['results'][i]['source_id'],
+          title: newsData[i]['title'],
+          link: newsData[i]['url'],
+          creator: newsData[i]['author'],
+          desc: newsData[i]['description'],
+          content: newsData[i]['content'],
+          pubDate: newsData[i]['publishedAt'],
+          imageUrl: newsData[i]['urlToImage'],
+          sourceId: newsData[i]['source']['name'],
         ),
       );
-      nextPage = newsData['nextPage'];
-      print("///////${newsData['results'][i]['video_url']}");
     }
     setState(() {});
   }

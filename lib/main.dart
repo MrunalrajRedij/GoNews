@@ -73,6 +73,6 @@ class _CheckAuthState extends State<CheckAuth> {
           )
         : _user == null
             ? const LoginScreen() // if user is empty redirect to AppInfoScreen
-            : HomeScreen(); // if user is not empty redirect to HomeScreen
+            : const HomeScreen(); // if user is not empty redirect to HomeScreen
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gonews/screens/fullNewsScreen.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:gonews/utils/config/decoration.dart' as decoration;
 
 class NewsListWidget extends StatelessWidget {
   final articleId,
@@ -21,7 +23,7 @@ class NewsListWidget extends StatelessWidget {
     this.creator,
     this.videoUrl,
     this.desc,
-    required this.content,
+    this.content,
     this.pubDate,
     this.imageUrl,
     this.sourceId,
@@ -34,6 +36,15 @@ class NewsListWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
           children: [
+            imageUrl != null
+                ? SizedBox(
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.contain,
+                    ),
+                  )
+                : Container(),
+            const SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -42,38 +53,38 @@ class NewsListWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title ?? ""),
+                      Text(
+                        title ?? "",
+                        style: decoration.tileHeading16TS,
+                      ),
                       const SizedBox(height: 10),
                       Text(
                         desc ?? "",
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 4,
+                        maxLines: 3,
                       ),
                     ],
                   ),
                 ),
                 const SizedBox(width: 5),
-                imageUrl != null
-                    ? SizedBox(
-                        width: 150,
-                        height: 100,
-                        child: Image.network(
-                          imageUrl,
-                          fit: BoxFit.contain,
-                        ),
-                      )
-                    : Container(),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(pubDate),
-                Text(sourceId),
+                Text(
+                  pubDate ?? "",
+                  style: decoration.tileHeading12TS,
+                ),
+                Text(
+                  sourceId ?? "",
+                  style: decoration.tileHeading12TS,
+                ),
               ],
             ),
-            const Divider(),
+            const SizedBox(height: 20),
+            const Divider(thickness: 3),
           ],
         ),
       ),

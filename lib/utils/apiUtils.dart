@@ -1,27 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
+import 'package:gonews/utils/config/values.dart' as values;
 class ApiUtils {
-  Future getHomeScreenNews(String page) async {
+
+  Future getHomeScreenNews(int page) async {
     String homeScreenNewsUrl = "";
-    if (page == "") {
-      homeScreenNewsUrl = "https://newsdata.io/api/1/news?"
-          "apikey=pub_28954d8170804bdab99bcfd4903c8d6267e77"
-          "&country=in"
-          "&language=en";
-    } else {
-      homeScreenNewsUrl = "https://newsdata.io/api/1/news?"
-          "apikey=pub_28954d8170804bdab99bcfd4903c8d6267e77"
-          "&country=in"
-          "&language=en"
-          "&page=$page";
-    }
+    homeScreenNewsUrl = "https://newsapi.org/v2/everything?q=india"
+        "&language=en"
+        "&page=$page"
+        "&apiKey=${values.apiKey}";
     try {
       var url = Uri.parse(homeScreenNewsUrl);
       var response = await http.get(
         url,
       );
-      return json.decode(response.body);
+      return json.decode(response.body)["articles"];
     } catch (_) {}
   }
 }
