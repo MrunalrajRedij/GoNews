@@ -56,13 +56,7 @@ class NewsListWidget extends StatelessWidget {
                     children: [
                       Text(
                         title ?? "",
-                        style: decoration.tileHeading16TS,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        desc ?? "",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
+                        style: decoration.tileHeading20TS,
                       ),
                     ],
                   ),
@@ -76,21 +70,41 @@ class NewsListWidget extends StatelessWidget {
               children: [
                 Text(
                   pubDate ?? "",
-                  style: decoration.tileHeading12TS,
+                  style: decoration.tileHeading14TS,
                 ),
                 Text(
                   sourceId ?? "",
-                  style: decoration.tileHeading12TS,
+                  style: decoration.tileHeading14TS,
                 ),
               ],
             ),
             const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.share,
+                    size: 35,
+                  ),
+                ),
+                SizedBox(width: 10),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.bookmark_border,
+                    size: 40,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 10),
             const Divider(thickness: 3),
           ],
         ),
       ),
-      onTap: () {
-      },
+      onTap: () {},
     );
   }
 }

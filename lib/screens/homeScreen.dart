@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -20,11 +21,18 @@ class _HomeScreenState extends State<HomeScreen> {
   List<NewsListWidget> newsLists = [];
   TextEditingController searchController = TextEditingController();
   int nextPage = 1;
+  final player = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     getNews(nextPage);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    player.dispose();
   }
 
   void getNews(int page) async {
@@ -108,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
+            player.play(AssetSource('audios/refresh.mp3'));
             getNews(nextPage);
           },
           child: Center(
