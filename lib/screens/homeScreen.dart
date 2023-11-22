@@ -106,35 +106,40 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const MenuDrawer(),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Container(
-            child: newsLists.isEmpty
-                ? ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 5,
-                          horizontal: 10,
-                        ),
-                        child: GFShimmer(
-                          child: Container(
-                            height: 200,
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            getNews(nextPage);
+          },
+          child: Center(
+            child: Container(
+              child: newsLists.isEmpty
+                  ? ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 5,
+                            horizontal: 10,
+                          ),
+                          child: GFShimmer(
+                            child: Container(
+                              height: 200,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    })
-                : ListView.builder(
-                    itemCount: newsLists.length,
-                    itemBuilder: (context, index) {
-                      return newsLists[index];
-                    }),
+                        );
+                      })
+                  : ListView.builder(
+                      itemCount: newsLists.length,
+                      itemBuilder: (context, index) {
+                        return newsLists[index];
+                      }),
+            ),
           ),
         ),
       ),

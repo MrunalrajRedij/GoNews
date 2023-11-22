@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gonews/screens/fullNewsScreen.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
 
 class NewsListWidget extends StatelessWidget {
@@ -91,22 +90,6 @@ class NewsListWidget extends StatelessWidget {
         ),
       ),
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FullNewsScreen(
-              title: title,
-              link: link,
-              creator: creator,
-              videoUrl: videoUrl,
-              desc: desc,
-              content: content,
-              pubDate: pubDate,
-              imageUrl: imageUrl,
-              sourceId: sourceId,
-            ),
-          ),
-        );
       },
     );
   }
