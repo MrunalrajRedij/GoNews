@@ -7,7 +7,9 @@ class ApiUtils {
     String homeScreenNewsUrl = "";
     homeScreenNewsUrl = "https://newsapi.org/v2/everything?q=india"
         "&language=en"
+        "&from=2023-11-10"
         "&page=$page"
+        "sortBy=publishedAt"
         "&apiKey=${values.apiKey}";
     try {
       var url = Uri.parse(homeScreenNewsUrl);

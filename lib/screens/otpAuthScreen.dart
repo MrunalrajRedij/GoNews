@@ -133,7 +133,7 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
                             alignment: Alignment.topLeft,
                             child: Text(
                               'Enter the OTP sent to  ${widget.phoneNumber}',
-                              style: decoration.tileHeading16TS,
+                              style: decoration.tileHeading20TS,
                             ),
                           ),
                           decoration.sizedBoxWithHeight10,

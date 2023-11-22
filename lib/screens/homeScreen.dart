@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void getNews(int page) async {
     dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
     newsLists.clear();
+    setState(() {});
     for (int i = 0; i < newsData.length; i++) {
       newsLists.add(
         NewsListWidget(
@@ -110,17 +111,22 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const MenuDrawer(),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: Container(
-            child: newsLists.isEmpty
-                ? const CircularProgressIndicator()
-                : ListView.builder(
-                    itemCount: newsLists.length,
-                    itemBuilder: (context, index) {
-                      return newsLists[index];
-                    }),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            getNews(nextPage);
+          },
+          child: Center(
+            child: Container(
+              child: newsLists.isEmpty
+                  ? const CircularProgressIndicator()
+                  : ListView.builder(
+                  itemCount: newsLists.length,
+                  itemBuilder: (context, index) {
+                    return newsLists[index];
+                  }),
+            ),
           ),
-        ),
+        )
       ),
     );
   }

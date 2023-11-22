@@ -80,10 +80,10 @@ TextStyle tileHeading13TS = TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 13.sp);
 TextStyle tileHeading14TS = TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14.sp);
-TextStyle tileHeading15TS = TextStyle(
-    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15.sp);
 TextStyle tileHeading16TS = TextStyle(
     color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.sp);
+TextStyle tileHeading20TS = TextStyle(
+    color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.sp);
 
 //grey small TS
 TextStyle blueGreyBold10TS = TextStyle(

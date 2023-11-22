@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gonews/screens/fullNewsScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
 
 class NewsListWidget extends StatelessWidget {
@@ -55,13 +53,7 @@ class NewsListWidget extends StatelessWidget {
                     children: [
                       Text(
                         title ?? "",
-                        style: decoration.tileHeading16TS,
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        desc ?? "",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
+                        style: decoration.tileHeading20TS,
                       ),
                     ],
                   ),
@@ -75,37 +67,41 @@ class NewsListWidget extends StatelessWidget {
               children: [
                 Text(
                   pubDate ?? "",
-                  style: decoration.tileHeading12TS,
+                  style: decoration.tileHeading14TS,
                 ),
                 Text(
                   sourceId ?? "",
-                  style: decoration.tileHeading12TS,
+                  style: decoration.tileHeading14TS,
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.share,
+                    size: 35,
+                  ),
+                  onPressed: () {},
+                ),
+                const SizedBox(width: 20),
+                IconButton(
+                  icon: const Icon(
+                    Icons.bookmark_border_outlined,
+                    size: 40,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
             const Divider(thickness: 3),
           ],
         ),
       ),
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FullNewsScreen(
-              title: title,
-              link: link,
-              creator: creator,
-              videoUrl: videoUrl,
-              desc: desc,
-              content: content,
-              pubDate: pubDate,
-              imageUrl: imageUrl,
-              sourceId: sourceId,
-            ),
-          ),
-        );
-      },
+      onTap: () {},
     );
   }
 }
