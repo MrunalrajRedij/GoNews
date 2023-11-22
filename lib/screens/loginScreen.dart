@@ -33,12 +33,11 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Image.asset(
-                  //   values.spiconLogoAsset,
-                  //   scale: 9,
-                  // ),
-                  const SizedBox(height: 10),
-
+                  Image.asset(
+                    'assets/images/logo.png',
+                    scale: 5,
+                  ),
+                  const SizedBox(height: 50),
                   //text-field to enter country code and phone number
                   IntlPhoneField(
                     inputFormatters: [

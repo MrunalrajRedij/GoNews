@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:getwidget/components/shimmer/gf_shimmer.dart';
 import 'package:gonews/utils/apiUtils.dart';
 import 'package:gonews/widgets/menuDrawer.dart';
 import 'package:gonews/widgets/newsListWidget.dart';
@@ -26,15 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
     getNews(nextPage);
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   void getNews(int page) async {
     dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
     newsLists.clear();
-    setState(() {});
     for (int i = 0; i < newsData.length; i++) {
       newsLists.add(
         NewsListWidget(
@@ -111,22 +106,37 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const MenuDrawer(),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            getNews(nextPage);
-          },
-          child: Center(
-            child: Container(
-              child: newsLists.isEmpty
-                  ? const CircularProgressIndicator()
-                  : ListView.builder(
-                  itemCount: newsLists.length,
-                  itemBuilder: (context, index) {
-                    return newsLists[index];
-                  }),
-            ),
+        child: Center(
+          child: Container(
+            child: newsLists.isEmpty
+                ? ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 5,
+                          horizontal: 10,
+                        ),
+                        child: GFShimmer(
+                          child: Container(
+                            height: 200,
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    })
+                : ListView.builder(
+                    itemCount: newsLists.length,
+                    itemBuilder: (context, index) {
+                      return newsLists[index];
+                    }),
           ),
-        )
+        ),
       ),
     );
   }

@@ -23,19 +23,13 @@ class MenuDrawer extends Drawer {
                 border: Border(
                   bottom: Divider.createBorderSide(
                     context,
-                    color: palette.textFieldGreyColor,
                     width: 1.5.w,
                   ),
                 ),
               ),
-              child: const Padding(
-                padding:  EdgeInsets.symmetric(vertical: 10),
-                child: Column(
-                  children: [
-                    //menu logo
-                    // Image.asset(values.spiconLogoAsset),
-                  ],
-                ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: Image.asset('assets/images/logo.png'),
               ),
             ),
           ),
@@ -50,7 +44,6 @@ class MenuDrawer extends Drawer {
             ),
             onTap: () => changeScreenFunc(context, "/HomeScreen"),
           ),
-
 
           //job func
           ListTile(
