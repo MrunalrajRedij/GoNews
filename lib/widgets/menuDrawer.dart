@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gonews/utils/utilFunctions.dart';
 import 'package:gonews/utils/config/palette.dart' as palette;
 import 'package:gonews/utils/config/decoration.dart' as decoration;
+import 'package:share_plus/share_plus.dart';
 
 //we can use below variable by declaring this file anywhere (We are sort of using this variables as a global thing)
 //var are declared here so that parent widget can access them and pass data between screens
@@ -28,7 +29,7 @@ class MenuDrawer extends Drawer {
                 ),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Image.asset('assets/images/logo.png'),
               ),
             ),
@@ -85,7 +86,8 @@ class MenuDrawer extends Drawer {
               style: decoration.lightBlackHeading12TS,
             ),
             onTap: () async {
-              changeScreenFunc(context, "/ReferAFriendScreen");
+              Share.share('Check out this NEWS App:\n'
+                  'https://play.google.com/store/apps/details?id=com.mobile.gonews');
             },
           ),
 

@@ -42,9 +42,9 @@ dependencies:
   #for launching url
   url_launcher: ^6.1.6
   #viewing website in container (app itself)
-  flutter_inappwebview: ^5.7.1+2
+  flutter_inappwebview: ^5.8.0
   #for sharing content outside of the app
-  share_plus: ^6.3.2
+  share_plus: ^7.2.1
   #Getting phone number from all country
   intl_phone_field: ^3.1.0
   #Prebuild OTP fields

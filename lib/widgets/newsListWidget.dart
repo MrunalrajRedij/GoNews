@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
+import 'package:share_plus/share_plus.dart';
 
 class NewsListWidget extends StatelessWidget {
   final articleId,
@@ -83,16 +87,19 @@ class NewsListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(
+                  onPressed: () {
+                    Share.share('Check out this NEWS:\n'
+                        '$link');
+                  },
+                  icon: const Icon(
                     Icons.share,
                     size: 35,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 IconButton(
                   onPressed: () {},
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.bookmark_border,
                     size: 40,
                   ),
@@ -104,7 +111,38 @@ class NewsListWidget extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () async {
+        if (Platform.isAndroid) {
+          await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(
+              true);
+
+          var swAvailable = await AndroidWebViewFeature.isFeatureSupported(
+              AndroidWebViewFeature.SERVICE_WORKER_BASIC_USAGE);
+          var swInterceptAvailable =
+              await AndroidWebViewFeature.isFeatureSupported(
+                  AndroidWebViewFeature
+                      .SERVICE_WORKER_SHOULD_INTERCEPT_REQUEST);
+
+          if (swAvailable && swInterceptAvailable) {
+            InAppBrowser().openUrlRequest(
+              urlRequest: URLRequest(
+                url: Uri.parse(link),
+              ),
+              options: InAppBrowserClassOptions(
+                inAppWebViewGroupOptions: InAppWebViewGroupOptions(
+                  android: AndroidInAppWebViewOptions(useWideViewPort: false),
+                  ios: IOSInAppWebViewOptions(enableViewportScale: true),
+                ),
+                android: AndroidInAppBrowserOptions(),
+                ios: IOSInAppBrowserOptions(
+                    presentationStyle: IOSUIModalPresentationStyle.FULL_SCREEN),
+                crossPlatform: InAppBrowserOptions(
+                    toolbarTopBackgroundColor: Colors.white),
+              ),
+            );
+          }
+        }
+      },
     );
   }
 }
