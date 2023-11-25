@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gonews/utils/utilFunctions.dart';
 import 'package:gonews/utils/config/palette.dart' as palette;
 import 'package:gonews/utils/config/decoration.dart' as decoration;
+import 'package:gonews/widgets/policyDialog.dart';
 import 'package:share_plus/share_plus.dart';
 
 //we can use below variable by declaring this file anywhere (We are sort of using this variables as a global thing)
@@ -15,95 +16,123 @@ class MenuDrawer extends Drawer {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
         children: [
-          SizedBox(
-            height: 170,
-            child: DrawerHeader(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: Divider.createBorderSide(
-                    context,
-                    width: 1.5.w,
+          Flexible(
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 170,
+                  child: DrawerHeader(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: Divider.createBorderSide(
+                          context,
+                          width: 1.5.w,
+                        ),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Image.asset('assets/images/logo.png'),
+                    ),
                   ),
                 ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Image.asset('assets/images/logo.png'),
-              ),
+
+                //home screen btn
+                ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.home),
+                  title: Text(
+                    'Home',
+                    style: decoration.lightBlackHeading12TS,
+                  ),
+                  onTap: () => changeScreenFunc(context, "/HomeScreen"),
+                ),
+
+                //job func
+                ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.account_box_outlined),
+                  title: Text(
+                    'Bookmarks',
+                    style: decoration.lightBlackHeading12TS,
+                  ),
+                  onTap: () {
+                    changeScreenFunc(context, "/BookmarkScreen");
+                  },
+                ),
+                //privacy policy btn
+                ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.policy),
+                  title: Text(
+                    'Privacy Policy',
+                    style: decoration.lightBlackHeading12TS,
+                  ),
+                  onTap: () async {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return PolicyDialog(mdFileName: 'privacy-policy.md');
+                        });
+                  },
+                ),
+
+                //refer a friend screen btn
+                ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.share),
+                  title: Text(
+                    'Refer A Friend',
+                    style: decoration.lightBlackHeading12TS,
+                  ),
+                  onTap: () async {
+                    Share.share('Check out this NEWS App:\n'
+                        'https://play.google.com/store/apps/details?id=com.mobile.gonews');
+                  },
+                ),
+
+                //logout btn
+                ListTile(
+                  horizontalTitleGap: 0,
+                  leading: const Icon(Icons.logout),
+                  title: Text(
+                    'Logout',
+                    style: decoration.lightBlackHeading12TS,
+                  ),
+                  onTap: () {
+                    //signOut from the firebase and redirect to loginScreen
+                    UtilFunctions().logOut(context);
+                  },
+                ),
+              ],
             ),
           ),
-
-          //home screen btn
+          const Divider(
+            thickness: 2,
+            indent: 40,
+            endIndent: 40,
+          ),
           ListTile(
             horizontalTitleGap: 0,
-            leading: const Icon(Icons.home),
-            title: Text(
-              'Home',
-              style: decoration.lightBlackHeading12TS,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/donateIcon.png',
+                  scale: 15,
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  'Want to Support?\nBuy me a Coffee!',
+                  style: decoration.redBold14TS,
+                ),
+              ],
             ),
-            onTap: () => changeScreenFunc(context, "/HomeScreen"),
+            onTap: () async {},
           ),
-
-          //job func
-          ListTile(
-            horizontalTitleGap: 0,
-            leading: const Icon(Icons.account_box_outlined),
-            title: Text(
-              'Bookmarks',
-              style: decoration.lightBlackHeading12TS,
-            ),
-            onTap: () {
-              changeScreenFunc(context, "/BookmarkScreen");
-            },
-          ),
-
-          //privacy policy btn
-          ListTile(
-            horizontalTitleGap: 0,
-            leading: const Icon(Icons.policy),
-            title: Text(
-              'Privacy Policy',
-              style: decoration.lightBlackHeading12TS,
-            ),
-            onTap: () async {
-              // //pop menu so inAppWebView bg will look correct
-              // Navigator.pop(context);
-              // // launches privacyPolicy url
-              // UtilFunctions().launchUrlInWebView(
-              //   Uri.parse(values.privacyPolicyUrl),
-              // );
-            },
-          ),
-
-          //refer a friend screen btn
-          ListTile(
-            horizontalTitleGap: 0,
-            leading: const Icon(Icons.share),
-            title: Text(
-              'Refer A Friend',
-              style: decoration.lightBlackHeading12TS,
-            ),
-            onTap: () async {
-              Share.share('Check out this NEWS App:\n'
-                  'https://play.google.com/store/apps/details?id=com.mobile.gonews');
-            },
-          ),
-
-          //logout btn
-          ListTile(
-            horizontalTitleGap: 0,
-            leading: const Icon(Icons.logout),
-            title: Text(
-              'Logout',
-              style: decoration.lightBlackHeading12TS,
-            ),
-            onTap: () {
-              //signOut from the firebase and redirect to loginScreen
-              UtilFunctions().logOut(context);
-            },
-          ),
+          const SizedBox(height: 10),
         ],
       ),
     );
