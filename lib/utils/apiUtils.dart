@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:gonews/utils/config/values.dart' as values;
-class ApiUtils {
+import 'package:intl/intl.dart';
 
+class ApiUtils {
   Future getHomeScreenNews(int page) async {
+    DateTime date = DateTime.now().subtract(const Duration(days: 1));
     String homeScreenNewsUrl = "";
     homeScreenNewsUrl = "https://newsapi.org/v2/everything?q=india"
         "&language=en"
-        "&from=2023-11-10"
+        "&from=${DateFormat("yyyy-MM-dd").format(date)}"
+        // "&from=2023-11-10"
         "&page=$page"
         "sortBy=publishedAt"
         "&apiKey=${values.apiKey}";

@@ -36,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void getNews(int page) async {
-    dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
     newsLists.clear();
+    setState(() {});
+    dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
     for (int i = 0; i < newsData.length; i++) {
       newsLists.add(
         NewsListWidget(

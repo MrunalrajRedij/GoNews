@@ -60,6 +60,8 @@ dependencies:
   #package for using custom widgets
   getwidget: ^3.0.1
   audioplayers: ^5.2.1
+  intl: ^0.18.1
+  timeago: ^3.6.0
 
 dev_dependencies:
   flutter_test:

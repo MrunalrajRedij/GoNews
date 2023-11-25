@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
+import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsListWidget extends StatelessWidget {
@@ -33,6 +34,9 @@ class NewsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ssZ").parse(pubDate);
+
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -73,7 +77,7 @@ class NewsListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  pubDate ?? "",
+                  timeago.format(dateTime) ?? "",
                   style: decoration.tileHeading14TS,
                 ),
                 Text(
