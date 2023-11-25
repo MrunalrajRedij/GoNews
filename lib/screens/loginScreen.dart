@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gonews/screens/otpAuthScreen.dart';
+import 'package:gonews/widgets/policyDialog.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
@@ -154,9 +155,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: decoration.blueBold15TS,
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    //launches TOS url
-                                    // UtilFunctions().launchUrlInWebView(
-                                    //     Uri.parse(values.tosUrl));
+                                    showDialog(context: context, builder: (context){
+                                      return PolicyDialog(mdFileName: 'tos.md');
+                                    });
                                   },
                               ),
                               TextSpan(
@@ -167,9 +168,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 style: decoration.blueBold15TS,
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    //launches privacyPolicyUrl
-                                    // UtilFunctions().launchUrlInWebView(
-                                    //     Uri.parse(values.privacyPolicyUrl));
+                                  showDialog(context: context, builder: (context){
+                                    return PolicyDialog(mdFileName: 'privacy-policy.md');
+                                  });
                                   },
                               ),
                               TextSpan(
