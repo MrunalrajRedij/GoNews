@@ -6,6 +6,8 @@ import 'package:gonews/widgets/policyDialog.dart';
 import 'package:intl_phone_field/countries.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
+import 'package:gonews/utils/config/palette.dart' as palette;
+
 
 //this screen is used to login user in app
 class LoginScreen extends StatefulWidget {
@@ -25,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: palette.scaffoldBgColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

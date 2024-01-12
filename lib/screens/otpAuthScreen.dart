@@ -107,7 +107,7 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: palette.scaffoldBgColor,
       body: SafeArea(
         child: Center(
           child: Container(
@@ -115,11 +115,11 @@ class _OtpAuthScreenState extends State<OtpAuthScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Image.asset(
-                //   values.spiconLogoAsset,
-                //   scale: 9,
-                // ),
-                decoration.sizedBoxWithHeight10,
+                Image.asset(
+                  'assets/images/logo.png',
+                  scale: 5,
+                ),
+                const SizedBox(height: 50),
                 isCheckingOTP
                     ?
                     //show loading widget, whenever there is loading

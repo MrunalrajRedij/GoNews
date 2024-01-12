@@ -127,7 +127,10 @@ TextStyle whiteBold12TS = TextStyle(
 TextStyle whiteBold14TS = TextStyle(
     color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14.sp);
 TextStyle whiteBold16TS = TextStyle(
-    color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16.sp);
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  fontSize: 16.sp,
+);
 TextStyle whiteBold18TS = TextStyle(
     color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18.sp);
 TextStyle whiteBold25TS = TextStyle(

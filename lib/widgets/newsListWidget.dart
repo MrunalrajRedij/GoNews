@@ -1,12 +1,14 @@
 import 'dart:io';
+import 'package:gonews/utils/apiUtils.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:gonews/utils/config/decoration.dart' as decoration;
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:gonews/utils/config/palette.dart' as palette;
 
-class NewsListWidget extends StatelessWidget {
+class NewsListWidget extends StatefulWidget {
   final articleId,
       title,
       link,
@@ -17,8 +19,9 @@ class NewsListWidget extends StatelessWidget {
       pubDate,
       imageUrl,
       sourceId;
+  bool? saved;
 
-  const NewsListWidget({
+  NewsListWidget({
     Key? key,
     this.articleId,
     required this.title,
@@ -30,28 +33,31 @@ class NewsListWidget extends StatelessWidget {
     this.pubDate,
     this.imageUrl,
     this.sourceId,
+    this.saved,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  State<NewsListWidget> createState() => _NewsListWidgetState();
+}
 
-    final DateTime dateTime = DateFormat("yyyy-MM-ddTHH:mm:ssZ").parse(pubDate);
+class _NewsListWidgetState extends State<NewsListWidget> {
+  @override
+  Widget build(BuildContext context) {
+    final DateTime dateTime =
+        DateFormat("yyyy-MM-ddTHH:mm:ssZ").parse(widget.pubDate);
 
     return GestureDetector(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Column(
           children: [
-            imageUrl != null
-                ? Hero(
-                    tag: 'animation',
-                    child: SizedBox(
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  )
+            widget.imageUrl != null
+                ? SizedBox(
+                  child: Image.network(
+                    widget.imageUrl,
+                    fit: BoxFit.contain,
+                  ),
+                )
                 : Container(),
             const SizedBox(height: 20),
             Row(
@@ -63,7 +69,7 @@ class NewsListWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title ?? "",
+                        widget.title ?? "",
                         style: decoration.tileHeading20TS,
                       ),
                     ],
@@ -77,11 +83,11 @@ class NewsListWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  timeago.format(dateTime) ?? "",
+                  timeago.format(dateTime),
                   style: decoration.tileHeading14TS,
                 ),
                 Text(
-                  sourceId ?? "",
+                  widget.sourceId ?? "",
                   style: decoration.tileHeading14TS,
                 ),
               ],
@@ -92,8 +98,8 @@ class NewsListWidget extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Share.share('Check out this NEWS:\n'
-                        '$link');
+                    Share.share(
+                        '${widget.title}\n\n${widget.desc}\n\nRead more: ${widget.link}');
                   },
                   icon: const Icon(
                     Icons.share,
@@ -101,13 +107,83 @@ class NewsListWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.bookmark_border,
-                    size: 40,
-                  ),
-                )
+                widget.saved!
+                    ? IconButton(
+                        onPressed: () async {
+                          bool success =
+                              await ApiUtils().removeNews(widget.title);
+                          setState(() {
+                            widget.saved = false;
+                          });
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            success
+                                ? const SnackBar(
+                                    content: Text(
+                                      "NEWS Un-saved !!!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                : const SnackBar(
+                                    content: Text(
+                                      "Error in removing NEWS!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    backgroundColor: palette.redColor,
+                                  ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.bookmark,
+                          size: 40,
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () async {
+                          bool success = await ApiUtils().saveNews(
+                            NewsListWidget(
+                              title: widget.title,
+                              articleId: widget.articleId,
+                              link: widget.link,
+                              creator: widget.creator,
+                              videoUrl: widget.videoUrl,
+                              desc: widget.desc,
+                              content: widget.content,
+                              pubDate: widget.pubDate,
+                              imageUrl: widget.imageUrl,
+                              sourceId: widget.sourceId,
+                            ),
+                          );
+                          setState(() {
+                            widget.saved = true;
+                          });
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            success
+                                ? const SnackBar(
+                                    content: Text(
+                                      "NEWS Saved !!!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                : const SnackBar(
+                                    content: Text(
+                                      "Error in saving NEWS!",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    backgroundColor: palette.redColor,
+                                  ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.bookmark_border,
+                          size: 40,
+                        ),
+                      )
               ],
             ),
             const SizedBox(height: 10),
@@ -130,7 +206,7 @@ class NewsListWidget extends StatelessWidget {
           if (swAvailable && swInterceptAvailable) {
             InAppBrowser().openUrlRequest(
               urlRequest: URLRequest(
-                url: Uri.parse(link),
+                url: Uri.parse(widget.link),
               ),
               options: InAppBrowserClassOptions(
                 inAppWebViewGroupOptions: InAppWebViewGroupOptions(

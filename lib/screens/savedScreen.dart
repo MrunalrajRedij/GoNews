@@ -1,60 +1,26 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:getwidget/components/shimmer/gf_shimmer.dart';
-import 'package:gonews/utils/apiUtils.dart';
+import 'package:gonews/utils/config/palette.dart' as palette;
+import 'package:gonews/utils/config/decoration.dart' as decoration;
 import 'package:gonews/widgets/menuDrawer.dart';
 import 'package:gonews/widgets/newsListWidget.dart';
-import 'package:gonews/utils/config/palette.dart' as palette;
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+class SavedScreen extends StatefulWidget {
+  const SavedScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SavedScreen> createState() => _SavedScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SavedScreenState extends State<SavedScreen> {
   List<NewsListWidget> newsLists = [];
   TextEditingController searchController = TextEditingController();
   int nextPage = 1;
   final player = AudioPlayer();
-
-  @override
-  void initState() {
-    super.initState();
-    getNews(nextPage);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    player.dispose();
-  }
-
-  void getNews(int page) async {
-    newsLists.clear();
-    setState(() {});
-    dynamic newsData = await ApiUtils().getHomeScreenNews(nextPage);
-    for (int i = 0; i < newsData.length; i++) {
-      newsLists.add(
-        NewsListWidget(
-          title: newsData[i]['title'],
-          link: newsData[i]['url'],
-          creator: newsData[i]['author'],
-          desc: newsData[i]['description'],
-          content: newsData[i]['content'],
-          pubDate: newsData[i]['publishedAt'],
-          imageUrl: newsData[i]['urlToImage'],
-          sourceId: newsData[i]['source']['name'],
-          saved: false,
-        ),
-      );
-    }
-    setState(() {});
-  }
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: palette.scaffoldBgColor,
         elevation: 0,
         title: const Text(
-          'NEWS ON THE GO',
+          'SAVED NEWS',
           style: TextStyle(color: palette.primaryColor),
         ),
         //text-field to type pattern for searching in to UserListScreen
@@ -118,39 +84,62 @@ class _HomeScreenState extends State<HomeScreen> {
         child: RefreshIndicator(
           onRefresh: () async {
             player.play(AssetSource('audios/refresh.mp3'));
-            getNews(nextPage);
           },
-          child: Center(
-            child: Container(
-              child: newsLists.isEmpty
-                  ? ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 10,
-                          ),
-                          child: GFShimmer(
-                            child: Container(
-                              height: 200,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+          child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Users")
+                  .doc(user?.phoneNumber)
+                  .collection("Saved")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                return !snapshot.hasData
+                    ? ListView.builder(
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 10,
+                            ),
+                            child: GFShimmer(
+                              child: Container(
+                                height: 200,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      })
-                  : ListView.builder(
-                      itemCount: newsLists.length,
-                      itemBuilder: (context, index) {
-                        return newsLists[index];
-                      }),
-            ),
-          ),
+                          );
+                        })
+                    : snapshot.data?.size == 0
+                        ? Center(
+                            child: Text(
+                              'No Saved News',
+                              style: decoration.blueBold18TS,
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: snapshot.data?.docs.length,
+                            itemBuilder: (context, index) {
+                              DocumentSnapshot newsData = snapshot
+                                  .data?.docs[index] as DocumentSnapshot;
+                              return NewsListWidget(
+                                title: newsData['title'],
+                                link: newsData['link'],
+                                creator: newsData['creator'],
+                                desc: newsData['desc'],
+                                content: newsData['content'],
+                                pubDate: newsData['pubDate'],
+                                imageUrl: newsData['imageUrl'],
+                                sourceId: newsData['sourceId'],
+                                saved: true,
+                              );
+                            },
+                          );
+              }),
         ),
       ),
     );
