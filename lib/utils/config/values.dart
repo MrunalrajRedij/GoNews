@@ -5,5 +5,5 @@ const apiKey = "6e16af6c79254a079b1e921faca866ca";
 const String initAmount = '10';
 
 //razorpay
-String api_key = "rzp_test_sj2H4ujnY45Vv1";
-String api_secret = "jYDIRmkDxK53f1huI90kBtZm";
+String api_key = "";
+String api_secret = "";
