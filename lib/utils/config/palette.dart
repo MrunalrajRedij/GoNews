@@ -44,10 +44,6 @@ final Color? scaffoldBgColor = Colors.grey[50];
 //primaryColor -- Royal blue
 const Color primaryColor = Color(0xFF1C39BB);
 
-//Text-field grey color
-const Color textFieldGreyColor = Color(0xFFDCDCDC);
-const Color darkGreyColor = Color(0xFF464646);
-
 //colors used for different headings
 const Color lightBlackColor = Color(0xFF535353);
 
